@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aesthetic AI To-Do</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <audio id="alarm-sound" src="https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg" preload="auto"></audio>
+
+    <div class="main-container">
+        <header>
+            <h1>My Tasks</h1>
+            <p id="status-text">Tap mic or type...</p>
+        </header>
+
+        <div class="mic-wrapper">
+            <div class="ripple"></div>
+            <button id="mic-btn"><i class="fas fa-microphone"></i></button>
+        </div>
+
+        <div class="input-group">
+            <input type="text" id="text-input" placeholder="Add a new task...">
+            <input type="time" id="time-input">
+            <button id="add-btn"><i class="fas fa-plus"></i></button>
+        </div>
+
+        <h3 class="section-title">Active</h3>
+        <ul id="todo-list"></ul>
+
+        <div class="history-header">
+            <h3 class="section-title">Completed</h3>
+            <button id="clear-history" onclick="clearHistory()">Clear</button>
+        </div>
+        <ul id="completed-list"></ul>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

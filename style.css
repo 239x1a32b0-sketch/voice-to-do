@@ -1,0 +1,247 @@
+/* --- COPY ALL PREVIOUS CSS (Background, Body, Container, Mic) --- */
+/* ... (Keep the :root, body, .main-container, .mic-wrapper etc. exactly as before) ... */
+
+/* RE-PASTE THESE CORE STYLES IF NEEDED */
+:root {
+    --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --card-bg: rgba(255, 255, 255, 0.15);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-color: #ffffff;
+}
+
+body {
+    background: var(--bg-gradient);
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden; 
+}
+/* Floating Orb */
+body::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #ff00cc, transparent 70%);
+    opacity: 0.4;
+    animation: float 10s infinite ease-in-out;
+    z-index: -1;
+}
+
+/* Glass Card */
+.main-container {
+    width: 400px; /* Slightly wider for the time input */
+    padding: 40px;
+    border-radius: 25px;
+    background: var(--card-bg);
+    backdrop-filter: blur(15px); 
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    text-align: center;
+    color: var(--text-color);
+}
+h1 { margin-bottom: 5px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+#status-text { font-size: 0.9rem; opacity: 0.8; margin-top: 5px; font-weight: 300; }
+
+/* --- MIC STYLES (Keep exact same) --- */
+.mic-wrapper {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 30px auto 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#mic-btn {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.3s;
+}
+#mic-btn:hover { transform: scale(1.1); }
+.ripple {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    z-index: 1;
+}
+.mic-wrapper.listening .ripple { animation: ripple-anim 1.5s infinite ease-out; border-color: #ff00cc; }
+.mic-wrapper.listening #mic-btn { animation: breathe 1.5s infinite ease-in-out; }
+
+/* --- UPDATED INPUT GROUP (Glassy Time Picker) --- */
+.input-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 30px;
+}
+
+/* Text Input */
+#text-input {
+    flex-grow: 2;
+    padding: 12px 15px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    outline: none;
+}
+#text-input::placeholder { color: rgba(255, 255, 255, 0.7); }
+
+/* Time Input Styling */
+#time-input {
+    width: 90px; /* Compact width */
+    padding: 10px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    outline: none;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+}
+/* Hack to make the clock icon white in Chrome */
+#time-input::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}
+
+#add-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: none;
+    background: white;
+    color: #667eea;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+#add-btn:hover { transform: scale(1.1) rotate(90deg); }
+
+/* --- LIST ITEMS WITH TIME --- */
+li {
+    background: rgba(255, 255, 255, 0.85);
+    color: #333;
+    padding: 12px 18px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    animation: slideUp 0.4s forwards ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Time Badge inside List Item */
+.task-time {
+    font-size: 0.75rem;
+    background: #667eea;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 10px;
+}
+
+/* Alarm Ringing Effect */
+li.ringing {
+    animation: shake 0.5s infinite;
+    background: #ff4b4b; /* Red background when alarming */
+    color: white;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+/* Keep previous animations */
+@keyframes float { 0% { transform: translate(0, 0); } 50% { transform: translate(50px, 50px); } 100% { transform: translate(0, 0); } }
+@keyframes ripple-anim { 0% { transform: scale(1); opacity: 0.8; border-width: 4px;} 100% { transform: scale(2.2); opacity: 0; border-width: 0px;} }
+@keyframes breathe { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+li.slide-out { animation: slideRight 0.5s forwards cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+@keyframes slideRight { to { opacity: 0; transform: translateX(100px) rotate(10deg); } }
+
+/* --- PASTE ALL PREVIOUS CSS HERE FIRST --- */
+
+/* ... (Keep :root, body, .main-container, inputs, mic-wrapper etc.) ... */
+
+/* --- NEW STYLES FOR HISTORY --- */
+
+.section-title {
+    text-align: left;
+    margin: 20px 0 10px 5px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    opacity: 0.6;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 5px;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#clear-history {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.75rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+#clear-history:hover { color: #ff4b4b; }
+
+/* Completed List Styling */
+#completed-list li {
+    background: rgba(255, 255, 255, 0.1); /* Darker/More transparent */
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: line-through;
+    box-shadow: none;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+#completed-list li .task-time {
+    background: #555; /* Grey out the time badge */
+    color: #aaa;
+}
+
+/* Animation for moving items */
+.move-down {
+    animation: fadeOutDown 0.3s forwards;
+}
+.move-up {
+    animation: fadeOutUp 0.3s forwards;
+}
+
+@keyframes fadeOutDown { to { opacity: 0; transform: translateY(20px); } }
+@keyframes fadeOutUp { to { opacity: 0; transform: translateY(-20px); } }
