@@ -1,7 +1,4 @@
-/* --- COPY ALL PREVIOUS CSS (Background, Body, Container, Mic) --- */
-/* ... (Keep the :root, body, .main-container, .mic-wrapper etc. exactly as before) ... */
 
-/* RE-PASTE THESE CORE STYLES IF NEEDED */
 :root {
     --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     --card-bg: rgba(255, 255, 255, 0.15);
@@ -187,9 +184,7 @@ li.ringing {
 li.slide-out { animation: slideRight 0.5s forwards cubic-bezier(0.68, -0.55, 0.265, 1.55); }
 @keyframes slideRight { to { opacity: 0; transform: translateX(100px) rotate(10deg); } }
 
-/* --- PASTE ALL PREVIOUS CSS HERE FIRST --- */
 
-/* ... (Keep :root, body, .main-container, inputs, mic-wrapper etc.) ... */
 
 /* --- NEW STYLES FOR HISTORY --- */
 

@@ -28,17 +28,17 @@ function saveTasks() {
 
     // Gather Active
     todoList.querySelectorAll('li').forEach(li => {
-        activeTasks.push({ 
-            text: li.querySelector('.text-span').textContent, 
-            time: li.dataset.alarmTime || "" 
+        activeTasks.push({
+            text: li.querySelector('.text-span').textContent,
+            time: li.dataset.alarmTime || ""
         });
     });
 
     // Gather Completed
     completedList.querySelectorAll('li').forEach(li => {
-        completedTasks.push({ 
-            text: li.querySelector('.text-span').textContent, 
-            time: li.dataset.alarmTime || "" 
+        completedTasks.push({
+            text: li.querySelector('.text-span').textContent,
+            time: li.dataset.alarmTime || ""
         });
     });
 
@@ -49,7 +49,7 @@ function saveTasks() {
 // --- 2. CORE: Create DOM Element ---
 function createItemDOM(text, timeStr, isCompleted) {
     const li = document.createElement('li');
-    
+
     const span = document.createElement('span');
     span.textContent = text;
     span.className = "text-span";
@@ -126,16 +126,33 @@ textInput.addEventListener('keypress', (e) => {
 });
 
 // --- 4. ALARM LOGIC (Same as before) ---
+let lastCheckedMinute = -1;
+
 setInterval(() => {
     const now = new Date();
-    const currentStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-    if (now.getSeconds() !== 0) return;
+    const currentMinute = now.getMinutes();
+
+    // Only check once per minute is sufficient, as long as we catch it within that minute.
+    // However, to be responsive, we check if we've already processed this minute.
+    // But wait, the original logic wanted to trigger "at the time". 
+    // Let's stick to checking every second but be more lenient or state-based.
+
+    // Better approach: Check if the current time matches an alarm time AND it hasn't rung yet for this minute.
+    // The previous logic `if (now.getSeconds() !== 0) return;` was too strict (could miss if browser lags).
+
+    // Let's just match the HH:MM string. If it matches, ensure we haven't already started ringing *recently* (relying on 'ringing' class is good, but let's be safe).
+
+    const currentStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 
     todoList.querySelectorAll('li').forEach(li => {
-        if (li.dataset.alarmTime === currentStr && !li.classList.contains('ringing')) {
-            li.classList.add('ringing');
-            alarmSound.play().catch(e => console.log(e));
-            speak(`Time for ${li.querySelector('.text-span').textContent}`);
+        // If time matches
+        if (li.dataset.alarmTime === currentStr) {
+            // And not already ringing
+            if (!li.classList.contains('ringing')) {
+                li.classList.add('ringing');
+                alarmSound.play().catch(e => console.log(e));
+                speak(`Time for ${li.querySelector('.text-span').textContent}`);
+            }
         }
     });
 }, 1000);
